@@ -22,6 +22,7 @@ export const UserContainer = styled.section `
                 font-size: 1rem;
                 width: 10rem;
                 padding: .3rem .5rem;
+                border: 1px solid var(--darkgrey);
             }
 
             input:focus {
@@ -42,7 +43,7 @@ export const UserContainer = styled.section `
             gap: .7rem;
             padding: .5rem 1.2rem;
             background-color: var(--lightgray);
-            border: 1px solid black;
+            border: 1px solid var(--darkgrey);
             border-radius: 2px;
             cursor: pointer;
 
@@ -57,6 +58,8 @@ export const UserContainer = styled.section `
         }
 
         button:hover {
+            opacity: .8;
+
             @keyframes searchAnimation {
                 from {transform: rotateY('0')};
                 to {transform: rotateY(180deg)};

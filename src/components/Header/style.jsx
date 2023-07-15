@@ -19,10 +19,10 @@ export const HeaderContainer = styled.header `
         background-color: var(--purple);
         color: var(--white);
         font-size: 1rem;
-        padding: .7rem 2.5rem;
+        padding: .7rem 3rem;
         border: none;
         border-radius: 1.7rem;
-        height: 3rem;
+        height: 2.8rem;
     }
 
     button:hover {
