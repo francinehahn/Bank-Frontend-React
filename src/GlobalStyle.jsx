@@ -7,4 +7,10 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         font-family: "Montserrat", "sans serif";
     }
+
+    :root {
+        --lightgrey: #f6f6f6;
+        --purple: #9500eb;
+        --black: rgb(0, 0, 0);
+    }
 `
