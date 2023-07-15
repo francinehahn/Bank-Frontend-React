@@ -10,7 +10,9 @@ export const GlobalStyle = createGlobalStyle`
 
     :root {
         --lightgrey: #f6f6f6;
-        --purple: #9500eb;
+        --white: #ffffff;
+        --light-purple: #e8c1ff;
+        --purple: #6f00b0;
         --black: rgb(0, 0, 0);
     }
 `
