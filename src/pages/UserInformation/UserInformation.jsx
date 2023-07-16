@@ -1,71 +1,41 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Header } from "../../components/Header/Header"
 import { useProtectedPage } from "../../hooks/useProtectedPage"
 import { Balance, FormContainer, MainContainer, NoData, PageNumber, Titles, TransactionsContainer } from "./style"
 import {BsSearch} from "react-icons/bs"
-import axios from "axios"
 import { Transactions } from "../../components/Transactions/Transactions"
 import { formatDate } from "../../utils/formatDate"
 import {MdKeyboardArrowRight, MdKeyboardArrowLeft, MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft} from "react-icons/md"
+import { useRequestDataTransactions } from "../../hooks/useRequestDataTransactions"
+import { useRequestDataBalancePeriod } from "../../hooks/useRequestDataBalancePeriod"
+import { useRequestDataTotalBalance } from "../../hooks/useRequestDataTotalBalance"
 
 export function UserInformation () {
     useProtectedPage()
 
-    const [pageNumber, setPageNumber] = useState(0)
     const accountId = localStorage.getItem("accountId")
+    const [pageNumber, setPageNumber] = useState(0)
+    
     const baseUrlTransfers = `http://localhost:8080/usuario/${accountId}/transferencias?numeroPagina=${pageNumber}`
     const baseUrlBalance = `http://localhost:8080/usuario/${accountId}/saldo`
 
     const [formSubmited, setFormSubmited] = useState(false)
-
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [operatorName, setOperatorName] = useState("")
 
-    const [dataTransfers, setDataTransfers] = useState(undefined)
-    const [errorTransfers, setErrorTransfers] = useState("")
+    const [dataTransfers, errorTransfers] = useRequestDataTransactions(
+        baseUrlTransfers, formSubmited, operatorName, startDate, endDate
+    )
 
-    const [dataTotalBalance, setDataTotalBalance] = useState(undefined)
-    const [dataBalancePeriod, setDataBalancePeriod] = useState(undefined)
-
-    useEffect(() => {
-        let formattedUrl = baseUrlTransfers
-
-        if (startDate && endDate && operatorName) {
-            formattedUrl = baseUrlTransfers+`?nomeOperador=${operatorName}&dataInicio=${startDate}&dataFim=${endDate}`
-        } else if (startDate && endDate) {
-            formattedUrl = baseUrlTransfers+`?dataInicio=${startDate}&dataFim=${endDate}`
-        } else if (operatorName) {
-            formattedUrl = baseUrlTransfers+`?nomeOperador=${operatorName}`
-        }
-
-        axios.get(formattedUrl)
-        .then(response => setDataTransfers(response.data))
-        .catch(err => setErrorTransfers(err.response.data))
-    }, [formSubmited, pageNumber, operatorName, startDate, endDate, baseUrlTransfers])
-    
-    //This request will happen every time the dataTransfers change
-    useEffect(() => {
-        if (startDate && endDate) {
-            axios.get(`${baseUrlBalance}?dataInicio=${startDate}&dataFim=${endDate}`)
-            .then(response => setDataBalancePeriod(response.data))
-            .catch(err => alert("Houve um erro ao requisitar o endpoint /saldo?dataInicio=${startDate}&dataFim=${endDate}: ", err.response.data))
-        } else {
-            axios.get(baseUrlBalance)
-            .then(response => setDataBalancePeriod(response.data))
-            .catch(err => alert("Houve um erro ao requisitar o endpoint /saldo: ", err.response.data))
-        }
-    }, [dataTransfers, startDate, endDate, baseUrlBalance])
-    
-    //This request will happen only when the page is reloaded
-    useEffect(() => {
-        axios.get(baseUrlBalance)
-        .then(response => setDataTotalBalance(response.data))
-        .catch(err => alert("Houve um erro ao requisitar o endpoint /saldo: ", err.response.data))
-    }, [baseUrlBalance, dataTotalBalance])
+    const [dataTotalBalance] = useRequestDataTotalBalance(baseUrlBalance)
+    const [dataBalancePeriod] = useRequestDataBalancePeriod(baseUrlBalance, dataTransfers, startDate, endDate)
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        //fazer validações
+
         setFormSubmited(!formSubmited)
     }
 
