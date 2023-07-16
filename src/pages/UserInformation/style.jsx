@@ -80,10 +80,7 @@ export const FormContainer = styled.form `
 
         span {
             font-size: 1rem;
-            @media screen and (max-width: 480px) {
-                font-size: .9rem;
-            }
-
+          
             @media screen and (max-width: 480px) {
                 display: none;
             }
@@ -115,7 +112,7 @@ export const FormContainer = styled.form `
 `
 
 export const TransactionsContainer = styled.section `
-    margin-top: 4rem;
+    margin: 4rem 2rem 0 2rem;
 `
 
 export const Titles = styled.div `
@@ -124,10 +121,52 @@ export const Titles = styled.div `
     gap: 4rem;
     background-color: var(--mediumgrey);
 
+    @media screen and (max-width: 1100px) {
+        gap: 2rem;
+    }
+    @media screen and (max-width: 660px) {
+        gap: 0rem;
+    }
+
     h3 {
         font-size: 1rem;
         line-height: 2.2rem;
         width: 12rem;
+
+        @media screen and (max-width: 1100px) {
+            width: 10rem;
+        }
+        @media screen and (max-width: 800px) {
+            font-size: .8rem;
+            line-height: 1.5rem;
+            width: 8rem;
+            padding: .3rem 0;
+        }
+        @media screen and (max-width: 660px) {
+            line-height: 1.1rem;
+        }
+    }
+
+    :nth-child(1), :nth-child(4) {
+        @media screen and (max-width: 540px) {
+            width: 5rem;
+        }
+    }
+    :nth-child(2) {
+        @media screen and (max-width: 540px) {
+            width: 6rem;
+        }
+    }
+    
+    :nth-child(3) {
+        @media screen and (max-width: 540px) {
+            width: 7rem;
+        }
+    }
+    :nth-child(4) {
+        @media screen and (max-width: 540px) {
+            width: 4.5rem;
+        }
     }
 `
 
@@ -137,8 +176,19 @@ export const Balance = styled.div `
     gap: 7rem;
     margin: 1rem 0;
 
+    @media screen and (max-width: 800px) {
+        gap: 4rem;
+    }
+       
     h2 {
         font-size: 1.2rem;
+
+        @media screen and (max-width: 1100px) {
+            font-size: 1rem;
+        }
+        @media screen and (max-width: 600px) {
+            font-size: .9rem;
+        }
     }
 `
 
