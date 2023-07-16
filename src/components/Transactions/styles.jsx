@@ -28,7 +28,7 @@ export const TransactionContainer = styled.div `
         @media screen and (max-width: 800px) {
             width: 6rem;
             font-size: .8rem;
-            line-height: 1.5rem;
+            line-height: 1.7rem;
         }
         @media screen and (max-width: 660px) {
             width: 5rem;

@@ -8,7 +8,7 @@ export const MainContainer = styled.section `
 `
 
 export const FormContainer = styled.form `
-    margin: 3.5rem 5rem 0 5rem;
+    margin: 4.5rem 5rem 0 5rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -20,7 +20,7 @@ export const FormContainer = styled.form `
     }
     @media screen and (max-width: 480px) {
         gap: 1rem;
-        margin: 3.5rem 1rem 0 1rem;
+        margin: 4rem 1rem 0 1rem;
     }
 
     div {
@@ -31,7 +31,7 @@ export const FormContainer = styled.form `
         label {
             font-size: 1rem;
             @media screen and (max-width: 480px) {
-                font-size: .9rem;
+                font-size: .8rem;
             }
         }
 
@@ -42,7 +42,8 @@ export const FormContainer = styled.form `
             border: 1px solid var(--darkgrey);
 
             @media screen and (max-width: 480px) {
-                font-size: .9rem;
+                font-size: .8rem;
+                width: 9rem;
             }
         }
 
@@ -58,7 +59,7 @@ export const FormContainer = styled.form `
 
             @media screen and (max-width: 480px) {
                 font-size: .9rem;
-                width: 16rem;
+                width: 15rem;
                 padding: .3rem .4rem;
             }
         }
@@ -112,7 +113,7 @@ export const FormContainer = styled.form `
 `
 
 export const TransactionsContainer = styled.section `
-    margin: 4rem 2rem 0 2rem;
+    margin: 5rem 2rem 0 2rem;
 `
 
 export const Titles = styled.div `
@@ -206,11 +207,19 @@ export const PageNumber = styled.div `
 
     p {
         font-size: 1.1rem;
+        @media screen and (max-width: 800px) {
+            font-size: 1rem;
+        }
     }
     svg {
         width: 1.5rem;
         height: 1.5rem;
         cursor: pointer;
+
+        @media screen and (max-width: 800px) {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
     }
     svg:hover {
         opacity: .7;
