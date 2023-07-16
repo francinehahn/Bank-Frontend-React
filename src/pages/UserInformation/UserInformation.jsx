@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Header } from "../../components/Header/Header"
 import { useProtectedPage } from "../../hooks/useProtectedPage"
-import { FormContainer, TransactionsContainer } from "./style"
+import { FormContainer, MainContainer, TransactionsContainer } from "./style"
 import {BsSearch} from "react-icons/bs"
 import axios from "axios"
 import { Transactions } from "../../components/Transactions/Transactions"
@@ -44,41 +44,44 @@ export function UserInformation () {
     }
 
     return (
-        <main>
+        <MainContainer>
             <Header/>
-            <FormContainer>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="startDate">Data de início</label>
-                        <input type="date" name="startDate" value={startDate} onChange={e => setStartDate(e.target.value)}/>
-                    </div>
+            <FormContainer onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="startDate">Data de início</label>
+                    <input type="date" name="startDate" value={startDate} onChange={e => setStartDate(e.target.value)}/>
+                </div>
 
-                    <div>
-                        <label htmlFor="endDate">Data de fim</label>
-                        <input type="date" name="endDate" value={endDate} onChange={e => setEndDate(e.target.value)}/>
-                    </div>
+                <div>
+                    <label htmlFor="endDate">Data de fim</label>
+                    <input type="date" name="endDate" value={endDate} onChange={e => setEndDate(e.target.value)}/>
+                </div>
 
-                    <div>
-                        <label htmlFor="operatorName">Nome do operador transacionado</label>
-                        <input type="text" placeholder="Nome do operador" name="operatorName" value={operatorName} onChange={e => setOperatorName(e.target.value)}/>
-                    </div>
+                <div>
+                    <label htmlFor="operatorName">Nome do operador transacionado</label>
+                    <input type="text" placeholder="Nome do operador" name="operatorName" value={operatorName} onChange={e => setOperatorName(e.target.value)}/>
+                </div>
 
-                    <button>
-                        <span>Pesquisar</span>
-                        <BsSearch/>
-                    </button>
-                </form>
+                <button>
+                    <span>Pesquisar</span>
+                    <BsSearch/>
+                </button>
             </FormContainer>
 
             <TransactionsContainer>
-              <span>
-                <h2>Data</h2>
-                <h2>Valor</h2>
-                <h2>Tipo</h2>
-                <h2>Nome do operador</h2>
-              </span>
+                <span>
+                    <p>Saldo total: R$</p>
+                    <p>Slado no período: R$</p>
+                </span>
+                
+                <span>
+                    <h2>Data</h2>
+                    <h2>Valor</h2>
+                    <h2>Tipo</h2>
+                    <h2>Nome do operador</h2>
+                </span>
 
-              <div>
+                <div>
                 {!data && <p>Clique em pesquisar para obter os dados.</p>}
                 {data && data.content.length === 0 && <p>Não há dados para os filtros selecionados.</p>}
                 {data && data.content.length > 0 && data.content.map(item => {
@@ -96,6 +99,6 @@ export function UserInformation () {
 
               {/*Chamar aqui o componente de transactions*/}
             </TransactionsContainer>
-        </main>
+        </MainContainer>
     )
 }
