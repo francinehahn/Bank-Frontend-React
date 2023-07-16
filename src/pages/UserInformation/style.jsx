@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const UserContainer = styled.section `
+export const FormContainer = styled.section `
     margin-top: 2rem;
 
     form {
@@ -69,5 +69,19 @@ export const UserContainer = styled.section `
                 animation: searchAnimation 2s ease;
             }
         }        
+    }
+`
+
+export const TransactionsContainer = styled.section `
+    margin-top: 5rem;
+    
+    div {
+        display: flex;
+        justify-content: center;
+        gap: 5rem;
+
+        h2 {
+            font-size: 1.2rem;
+        }
     }
 `
