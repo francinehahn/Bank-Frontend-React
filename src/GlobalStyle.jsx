@@ -17,5 +17,6 @@ export const GlobalStyle = createGlobalStyle`
         --purple: #6f00b0;
         --black: rgb(0, 0, 0);
         --red: red;
+        --green: #00e77f;
     }
 `

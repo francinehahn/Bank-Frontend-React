@@ -26,7 +26,7 @@ export function UserInformation () {
     const [dataBalancePeriod, setDataBalancePeriod] = useState(undefined)
 
     
-    //This request will happen every time the data transfers change
+    //This request will happen every time the dataTransfers change
     useEffect(() => {
         if (startDate && endDate) {
             axios.get(`${baseUrlBalance}?dataInicio=${startDate}&dataFim=${endDate}`)
@@ -91,8 +91,8 @@ export function UserInformation () {
 
             <TransactionsContainer>
                 <Balance>
-                    <h2>Saldo total: R${dataTotalBalance.toFixed(2)},00</h2>
-                    <h2>Saldo no período: R${dataBalancePeriod.toFixed(2) || 0},00</h2>
+                    <h2>Saldo total: R${Number(dataTotalBalance).toFixed(2)},00</h2>
+                    <h2>Saldo no período: R${Number(dataBalancePeriod).toFixed(2)},00</h2>
                 </Balance>
                 
                 <Titles>

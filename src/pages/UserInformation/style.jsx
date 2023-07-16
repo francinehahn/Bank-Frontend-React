@@ -45,9 +45,9 @@ export const FormContainer = styled.form `
         display: flex;
         align-items: center;
         gap: .7rem;
-        padding: .5rem 1.2rem;
-        background-color: var(--lightgray);
-        border: 1px solid var(--darkgrey);
+        padding: .55rem 1.2rem;
+        background-color: var(--green);
+        border: none;
         border-radius: 2px;
         cursor: pointer;
 
@@ -56,8 +56,8 @@ export const FormContainer = styled.form `
         }
 
         svg {
-            width: 1rem;
-            height: 1rem;
+            width: 1.1rem;
+            height: 1.1rem;
         }
     }
 
