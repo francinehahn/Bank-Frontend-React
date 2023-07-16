@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react"
 import { Header } from "../../components/Header/Header"
 import { useProtectedPage } from "../../hooks/useProtectedPage"
-import { Balance, FormContainer, MainContainer, NoData, Titles, TransactionsContainer } from "./style"
+import { Balance, FormContainer, MainContainer, NoData, PageNumber, Titles, TransactionsContainer } from "./style"
 import {BsSearch} from "react-icons/bs"
 import axios from "axios"
 import { Transactions } from "../../components/Transactions/Transactions"
 import { formatDate } from "../../utils/formatDate"
+import {MdKeyboardArrowRight, MdKeyboardArrowLeft, MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft} from "react-icons/md"
 
 export function UserInformation () {
     useProtectedPage()
 
+    const [pageNumber, setPageNumber] = useState(0)
     const accountId = localStorage.getItem("accountId")
-    const baseUrlTransfers = `http://localhost:8080/usuario/${accountId}/transferencias`
+    const baseUrlTransfers = `http://localhost:8080/usuario/${accountId}/transferencias?numeroPagina=${pageNumber}`
     const baseUrlBalance = `http://localhost:8080/usuario/${accountId}/saldo`
+
+    const [formSubmited, setFormSubmited] = useState(false)
 
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [operatorName, setOperatorName] = useState("")
-    const [pageNumber] = useState(0)
 
     const [dataTransfers, setDataTransfers] = useState(undefined)
     const [errorTransfers, setErrorTransfers] = useState("")
@@ -25,6 +28,21 @@ export function UserInformation () {
     const [dataTotalBalance, setDataTotalBalance] = useState(undefined)
     const [dataBalancePeriod, setDataBalancePeriod] = useState(undefined)
 
+    useEffect(() => {
+        let formattedUrl = baseUrlTransfers
+
+        if (startDate && endDate && operatorName) {
+            formattedUrl = baseUrlTransfers+`?nomeOperador=${operatorName}&dataInicio=${startDate}&dataFim=${endDate}`
+        } else if (startDate && endDate) {
+            formattedUrl = baseUrlTransfers+`?dataInicio=${startDate}&dataFim=${endDate}`
+        } else if (operatorName) {
+            formattedUrl = baseUrlTransfers+`?nomeOperador=${operatorName}`
+        }
+
+        axios.get(formattedUrl)
+        .then(response => setDataTransfers(response.data))
+        .catch(err => setErrorTransfers(err.response.data))
+    }, [formSubmited, pageNumber, operatorName, startDate, endDate, baseUrlTransfers])
     
     //This request will happen every time the dataTransfers change
     useEffect(() => {
@@ -37,7 +55,7 @@ export function UserInformation () {
             .then(response => setDataBalancePeriod(response.data))
             .catch(err => alert("Houve um erro ao requisitar o endpoint /saldo: ", err.response.data))
         }
-    }, [dataTransfers])
+    }, [dataTransfers, startDate, endDate, baseUrlBalance])
     
     //This request will happen only when the page is reloaded
     useEffect(() => {
@@ -48,20 +66,7 @@ export function UserInformation () {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
-        let formattedUrl = baseUrlTransfers
-
-        if (startDate && endDate && operatorName) {
-            formattedUrl = baseUrlTransfers+`?nomeOperador=${operatorName}&dataInicio=${startDate}&dataFim=${endDate}&numeroPagina=${pageNumber}`
-        } else if (startDate && endDate) {
-            formattedUrl = baseUrlTransfers+`?dataInicio=${startDate}&dataFim=${endDate}&numeroPagina=${pageNumber}`
-        } else if (operatorName) {
-            formattedUrl = baseUrlTransfers+`?nomeOperador=${operatorName}&numeroPagina=${pageNumber}`
-        }
-
-        axios.get(formattedUrl)
-        .then(response => setDataTransfers(response.data))
-        .catch(err => setErrorTransfers(err.response.data))
+        setFormSubmited(!formSubmited)
     }
 
     return (
@@ -103,7 +108,6 @@ export function UserInformation () {
                 </Titles>
 
                 <div>
-                    {!dataTransfers && <NoData>**Clique em pesquisar para obter os dados.</NoData>}
                     {dataTransfers && dataTransfers.content.length === 0 && <NoData>Não há dados para os filtros selecionados.</NoData>}
                     {errorTransfers && <NoData>Houve um erro: {errorTransfers}</NoData>}
                     
@@ -120,6 +124,16 @@ export function UserInformation () {
                         )
                     })}
                 </div>
+
+                {dataTransfers && (
+                    <PageNumber>
+                        <MdKeyboardDoubleArrowLeft onClick={() => setPageNumber(0)}/>
+                        <MdKeyboardArrowLeft onClick={() => dataTransfers.first? setPageNumber(0): setPageNumber(pageNumber - 1)}/>
+                        <p>{pageNumber + 1}</p>
+                        <MdKeyboardArrowRight onClick={() => dataTransfers.last? setPageNumber(pageNumber) : setPageNumber(pageNumber + 1)}/>
+                        <MdKeyboardDoubleArrowRight onClick={() => setPageNumber(dataTransfers.totalPages - 1)}/>
+                    </PageNumber>
+                )}
             </TransactionsContainer>
         </MainContainer>
     )

@@ -107,3 +107,20 @@ export const NoData = styled.p `
     margin-top: 2rem;
     color: var(--red);
 `
+
+export const PageNumber = styled.div `
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    p {
+        font-size: 1.1rem;
+    }
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        cursor: pointer;
+    }
+`
