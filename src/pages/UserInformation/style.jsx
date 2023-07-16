@@ -123,4 +123,7 @@ export const PageNumber = styled.div `
         height: 1.5rem;
         cursor: pointer;
     }
+    svg:hover {
+        opacity: .7;
+    }
 `
