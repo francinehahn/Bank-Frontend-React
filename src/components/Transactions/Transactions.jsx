@@ -5,7 +5,7 @@ export function Transactions (props) {
     return (
         <TransactionContainer $index={props.index}>
             <p>{props.date}</p>
-            <p>{props.value}</p>
+            <p>{props.value.toFixed(2)}</p>
             <p>{props.type}</p>
             <p>{props.operatorName || "----"}</p>
         </TransactionContainer>

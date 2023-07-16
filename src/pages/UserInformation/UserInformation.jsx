@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Header } from "../../components/Header/Header"
 import { useProtectedPage } from "../../hooks/useProtectedPage"
-import { Balance, FormContainer, MainContainer, Titles, TransactionsContainer } from "./style"
+import { Balance, FormContainer, MainContainer, NoData, Titles, TransactionsContainer } from "./style"
 import {BsSearch} from "react-icons/bs"
 import axios from "axios"
 import { Transactions } from "../../components/Transactions/Transactions"
@@ -23,23 +23,19 @@ export function UserInformation () {
     const [errorTransfers, setErrorTransfers] = useState("")
 
     const [dataTotalBalance, setDataTotalBalance] = useState(undefined)
-    const [errorTotalBalance, setErrorTotalBalance] = useState("")
-
     const [dataBalancePeriod, setDataBalancePeriod] = useState(undefined)
-    const [errorBalancePeriod, setErrorBalancePeriod] = useState("")
 
-    console.log(errorBalancePeriod, errorTotalBalance)
     
-    //This request will happen every time the start date and the end date change
+    //This request will happen every time the data transfers change
     useEffect(() => {
         if (startDate && endDate) {
             axios.get(`${baseUrlBalance}?dataInicio=${startDate}&dataFim=${endDate}`)
             .then(response => setDataBalancePeriod(response.data))
-            .catch(err => setErrorBalancePeriod(err.response.data))
+            .catch(err => alert("Houve um erro ao requisitar o endpoint /saldo?dataInicio=${startDate}&dataFim=${endDate}: ", err.response.data))
         } else {
             axios.get(baseUrlBalance)
             .then(response => setDataBalancePeriod(response.data))
-            .catch(err => setErrorBalancePeriod(err.response.data))
+            .catch(err => alert("Houve um erro ao requisitar o endpoint /saldo: ", err.response.data))
         }
     }, [dataTransfers])
     
@@ -47,10 +43,8 @@ export function UserInformation () {
     useEffect(() => {
         axios.get(baseUrlBalance)
         .then(response => setDataTotalBalance(response.data))
-        .catch(err => setErrorTotalBalance(err.response.data))
+        .catch(err => alert("Houve um erro ao requisitar o endpoint /saldo: ", err.response.data))
     }, [baseUrlBalance, dataTotalBalance])
-
-    console.log(errorTransfers)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -97,8 +91,8 @@ export function UserInformation () {
 
             <TransactionsContainer>
                 <Balance>
-                    <h2>Saldo total: R${dataTotalBalance},00</h2>
-                    <h2>Saldo no período: R${dataBalancePeriod || 0},00</h2>
+                    <h2>Saldo total: R${dataTotalBalance.toFixed(2)},00</h2>
+                    <h2>Saldo no período: R${dataBalancePeriod.toFixed(2) || 0},00</h2>
                 </Balance>
                 
                 <Titles>
@@ -109,8 +103,10 @@ export function UserInformation () {
                 </Titles>
 
                 <div>
-                    {!dataTransfers && <p>Clique em pesquisar para obter os dados.</p>}
-                    {dataTransfers && dataTransfers.content.length === 0 && <p>Não há dados para os filtros selecionados.</p>}
+                    {!dataTransfers && <NoData>**Clique em pesquisar para obter os dados.</NoData>}
+                    {dataTransfers && dataTransfers.content.length === 0 && <NoData>Não há dados para os filtros selecionados.</NoData>}
+                    {errorTransfers && <NoData>Houve um erro: {errorTransfers}</NoData>}
+                    
                     {dataTransfers && dataTransfers.content.length > 0 && dataTransfers.content.map((item, index) => {
                         return (
                             <Transactions 

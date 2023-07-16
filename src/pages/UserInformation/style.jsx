@@ -102,3 +102,8 @@ export const Balance = styled.div `
         font-size: 1.2rem;
     }
 `
+
+export const NoData = styled.p `
+    margin-top: 2rem;
+    color: var(--red);
+`
