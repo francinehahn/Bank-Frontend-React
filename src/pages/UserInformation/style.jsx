@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const FormContainer = styled.section `
-    margin-top: 2rem;
+    margin-top: 3.5rem;
 
     form {
         display: flex;
@@ -73,12 +73,12 @@ export const FormContainer = styled.section `
 `
 
 export const TransactionsContainer = styled.section `
-    margin-top: 5rem;
+    margin-top: 4rem;
     
-    div {
+    span {
         display: flex;
         justify-content: center;
-        gap: 5rem;
+        gap: 6rem;
 
         h2 {
             font-size: 1.2rem;

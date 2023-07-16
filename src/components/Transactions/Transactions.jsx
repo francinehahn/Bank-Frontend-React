@@ -7,7 +7,7 @@ export function Transactions (props) {
             <p>{props.date}</p>
             <p>{props.value}</p>
             <p>{props.type}</p>
-            <p>{props.operatorName}</p>
+            <p>{props.operatorName || "----"}</p>
         </TransactionContainer>
     )
 }
