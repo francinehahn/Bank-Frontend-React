@@ -8,5 +8,5 @@ export function useProtectedPage () {
     useEffect(() => {
         const token = localStorage.getItem("accountId")
         token === null && navigate("/") 
-    }, [])
+    }, [navigate])
 }

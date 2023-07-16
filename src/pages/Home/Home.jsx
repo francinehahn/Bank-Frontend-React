@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { HomeContainer } from "./style";
 import { useNavigate } from "react-router-dom";
+import { useRequestDataAccounts } from "../../hooks/useRequestDataAccounts";
 
 export function Home () {
-    const [accountId, setAccountId] = useState("")
     const navigate = useNavigate()
-    //Fazer requisição para o backend para o endpoint de getUsers
+
+    const [accountId, setAccountId] = useState("")
+    const [data, error] = useRequestDataAccounts("http://localhost:8080/usuarios")
+
+    const selectOptions = data && data.map(item => {
+        return <option key={item.idConta} value={item.idConta}>{item.idConta} - {item.nomeResponsavel}</option>
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -16,14 +22,14 @@ export function Home () {
     return (
         <HomeContainer>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="form">Escolha o id da conta que deseja acessar:</label>
+                <label htmlFor="form">Escolha a conta que deseja acessar:</label>
                 <select name="form" value={accountId} onChange={e => setAccountId(e.target.value)} required>
                     <option value="">Selecione</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    {selectOptions}
                 </select>
                 <button>Prosseguir</button>
             </form>
+            <p>{error}</p>
         </HomeContainer>
     )
 }

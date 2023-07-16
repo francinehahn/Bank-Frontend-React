@@ -25,6 +25,7 @@ export const HomeContainer = styled.section `
             padding: .5rem;
             border: none;
         }
+
         select:focus {
             outline: none;
         }
@@ -39,6 +40,11 @@ export const HomeContainer = styled.section `
 
         button:hover {
             background-color: var(--light-purple);
+        }
+
+        p {
+            font-size: .9rem;
+            color: var(--white);
         }
     }
 `
