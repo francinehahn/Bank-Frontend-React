@@ -5,6 +5,7 @@ import { FormContainer, MainContainer, TransactionsContainer } from "./style"
 import {BsSearch} from "react-icons/bs"
 import axios from "axios"
 import { Transactions } from "../../components/Transactions/Transactions"
+import { formatDate } from "../../utils/formatDate"
 
 export function UserInformation () {
     useProtectedPage()
@@ -88,7 +89,7 @@ export function UserInformation () {
                     return (
                         <Transactions 
                             key={item.id} 
-                            date={item.dataTransferencia} 
+                            date={formatDate(item.dataTransferencia)} 
                             value={item.valor} 
                             type={item.tipo}
                             operatorName={item.nomeOperadorTransacao}
