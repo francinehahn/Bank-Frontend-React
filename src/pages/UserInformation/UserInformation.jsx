@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Header } from "../../components/Header/Header"
 import { useProtectedPage } from "../../hooks/useProtectedPage"
-import { FormContainer, MainContainer, TransactionsContainer } from "./style"
+import { Balance, FormContainer, MainContainer, Titles, TransactionsContainer } from "./style"
 import {BsSearch} from "react-icons/bs"
 import axios from "axios"
 import { Transactions } from "../../components/Transactions/Transactions"
@@ -70,35 +70,34 @@ export function UserInformation () {
             </FormContainer>
 
             <TransactionsContainer>
-                <span>
-                    <p>Saldo total: R$</p>
-                    <p>Slado no período: R$</p>
-                </span>
+                <Balance>
+                    <h2>Saldo total: R$</h2>
+                    <h2>Saldo no período: R$</h2>
+                </Balance>
                 
-                <span>
-                    <h2>Data</h2>
-                    <h2>Valor</h2>
-                    <h2>Tipo</h2>
-                    <h2>Nome do operador</h2>
-                </span>
+                <Titles>
+                    <h3>Data</h3>
+                    <h3>Valor</h3>
+                    <h3>Tipo</h3>
+                    <h3>Nome do operador</h3>
+                </Titles>
 
                 <div>
-                {!data && <p>Clique em pesquisar para obter os dados.</p>}
-                {data && data.content.length === 0 && <p>Não há dados para os filtros selecionados.</p>}
-                {data && data.content.length > 0 && data.content.map(item => {
-                    return (
-                        <Transactions 
-                            key={item.id} 
-                            date={formatDate(item.dataTransferencia)} 
-                            value={item.valor} 
-                            type={item.tipo}
-                            operatorName={item.nomeOperadorTransacao}
-                        />
-                    )
-                })}
-              </div>
-
-              {/*Chamar aqui o componente de transactions*/}
+                    {!data && <p>Clique em pesquisar para obter os dados.</p>}
+                    {data && data.content.length === 0 && <p>Não há dados para os filtros selecionados.</p>}
+                    {data && data.content.length > 0 && data.content.map((item, index) => {
+                        return (
+                            <Transactions 
+                                key={item.id} 
+                                date={formatDate(item.dataTransferencia)} 
+                                value={item.valor} 
+                                type={item.tipo}
+                                operatorName={item.nomeOperadorTransacao}
+                                index={index}
+                            />
+                        )
+                    })}
+                </div>
             </TransactionsContainer>
         </MainContainer>
     )

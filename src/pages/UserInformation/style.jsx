@@ -77,18 +77,28 @@ export const FormContainer = styled.form `
 
 export const TransactionsContainer = styled.section `
     margin-top: 4rem;
-    
-    span {
-        display: flex;
-        justify-content: flex-start;
-        gap: 10rem;
+`
 
-        h2 {
-            font-size: 1.2rem;
-        }
+export const Titles = styled.div `
+    display: flex;
+    justify-content: flex-start;
+    gap: 4rem;
+    background-color: var(--mediumgrey);
+
+    h3 {
+        font-size: 1rem;
+        line-height: 2.2rem;
+        width: 12rem;
     }
+`
 
-    div {
-       
+export const Balance = styled.div `
+    display: flex;
+    justify-content: flex-start;
+    gap: 7rem;
+    margin: 1rem 0;
+
+    h2 {
+        font-size: 1.2rem;
     }
 `
