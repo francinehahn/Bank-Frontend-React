@@ -1,14 +1,19 @@
 import { useState } from "react"
+
 import { Header } from "../../components/Header/Header"
-import { useProtectedPage } from "../../hooks/useProtectedPage"
-import { Balance, FormContainer, MainContainer, NoData, PageNumber, Titles, TransactionsContainer } from "./style"
-import {BsSearch} from "react-icons/bs"
 import { Transactions } from "../../components/Transactions/Transactions"
+
 import { formatDate } from "../../utils/formatDate"
-import {MdKeyboardArrowRight, MdKeyboardArrowLeft, MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft} from "react-icons/md"
+
+import { useProtectedPage } from "../../hooks/useProtectedPage"
 import { useRequestDataTransactions } from "../../hooks/useRequestDataTransactions"
 import { useRequestDataBalancePeriod } from "../../hooks/useRequestDataBalancePeriod"
 import { useRequestDataTotalBalance } from "../../hooks/useRequestDataTotalBalance"
+
+import {MdKeyboardArrowRight, MdKeyboardArrowLeft, MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft} from "react-icons/md"
+import {BsSearch} from "react-icons/bs"
+
+import { Balance, FormContainer, MainContainer, NoData, PageNumber, Titles, TransactionsContainer } from "./style"
 
 export function UserInformation () {
     useProtectedPage()
@@ -34,7 +39,11 @@ export function UserInformation () {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        //fazer validações
+        //start date cannot be later than end date
+        if (new Date(startDate) > new Date(endDate)) {
+            alert('A data de início não pode ser posterior à data de fim.');
+            return
+        }
 
         setFormSubmited(!formSubmited)
     }
@@ -45,17 +54,34 @@ export function UserInformation () {
             <FormContainer onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="startDate">Data de início</label>
-                    <input type="date" name="startDate" value={startDate} onChange={e => setStartDate(e.target.value)}/>
+                    <input 
+                        type="date" 
+                        max={new Date().toISOString().slice(0,10)} 
+                        name="startDate" value={startDate} 
+                        onChange={e => setStartDate(e.target.value)}
+                    />
                 </div>
 
                 <div>
                     <label htmlFor="endDate">Data de fim</label>
-                    <input type="date" name="endDate" value={endDate} onChange={e => setEndDate(e.target.value)}/>
+                    <input 
+                        type="date" 
+                        max={new Date().toISOString().slice(0,10)} 
+                        name="endDate" 
+                        value={endDate} 
+                        onChange={e => setEndDate(e.target.value)}
+                    />
                 </div>
 
                 <div>
                     <label htmlFor="operatorName">Nome do operador transacionado</label>
-                    <input type="text" placeholder="Nome do operador" name="operatorName" value={operatorName} onChange={e => setOperatorName(e.target.value)}/>
+                    <input 
+                        type="text" 
+                        placeholder="Nome do operador" 
+                        name="operatorName" 
+                        value={operatorName} 
+                        onChange={e => setOperatorName(e.target.value)}
+                    />
                 </div>
 
                 <button>
@@ -95,7 +121,7 @@ export function UserInformation () {
                     })}
                 </div>
 
-                {dataTransfers && (
+                {dataTransfers && dataTransfers.content.length > 0 && (
                     <PageNumber>
                         <MdKeyboardDoubleArrowLeft onClick={() => setPageNumber(0)}/>
                         <MdKeyboardArrowLeft onClick={() => dataTransfers.first? setPageNumber(0): setPageNumber(pageNumber - 1)}/>
