@@ -13,7 +13,7 @@ import { useRequestDataTotalBalance } from "../../hooks/useRequestDataTotalBalan
 import {MdKeyboardArrowRight, MdKeyboardArrowLeft, MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft} from "react-icons/md"
 import {BsSearch} from "react-icons/bs"
 
-import { Balance, FormContainer, MainContainer, NoData, PageNumber, Titles, TransactionsContainer } from "./style"
+import { Balance, DateErrorMessage, FormContainer, MainContainer, NoData, PageNumber, Titles, TransactionsContainer } from "./style"
 
 export function UserInformation () {
     useProtectedPage()
@@ -28,6 +28,7 @@ export function UserInformation () {
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [operatorName, setOperatorName] = useState("")
+    const [dateErrorMessage, setDateErrorMessage] = useState("")
 
     const [dataTransfers, errorTransfers] = useRequestDataTransactions(
         baseUrlTransfers, formSubmited, operatorName, startDate, endDate
@@ -38,10 +39,16 @@ export function UserInformation () {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setDateErrorMessage("")
 
-        //start date cannot be later than end date
+        //the start date cannot be later than the end date
         if (new Date(startDate) > new Date(endDate)) {
-            alert('A data de início não pode ser posterior à data de fim.');
+            setDateErrorMessage("A data de início não pode ser posterior à data de fim.")
+            return
+        }
+
+        if ((startDate && !endDate) || !startDate && endDate) {
+            setDateErrorMessage("Você deve fornecer a data de início e a data de fim.")
             return
         }
 
@@ -89,6 +96,8 @@ export function UserInformation () {
                     <BsSearch/>
                 </button>
             </FormContainer>
+
+            <DateErrorMessage>{dateErrorMessage}</DateErrorMessage>
 
             <TransactionsContainer>
                 <Balance>

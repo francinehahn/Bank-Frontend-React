@@ -15,9 +15,17 @@ export const HomeContainer = styled.section `
         gap: 1rem;
         width: 23rem;
 
+        @media screen and (max-width: 480px) {
+            width: 18rem;
+        }
+
         label {
             font-size: 1.1rem;
             color: var(--white);
+
+            @media screen and (max-width: 480px) {
+                font-size: 1rem;
+            }
         }
 
         select {
