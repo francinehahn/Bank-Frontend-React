@@ -18,7 +18,7 @@ export const FormContainer = styled.form `
     @media screen and (max-width: 1100px) {
         gap: 2rem;
     }
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 650px) {
         gap: 1rem;
         margin: 4rem 1rem 0 1rem;
     }
@@ -82,7 +82,7 @@ export const FormContainer = styled.form `
         span {
             font-size: 1rem;
           
-            @media screen and (max-width: 480px) {
+            @media screen and (max-width: 650px) {
                 display: none;
             }
         }
@@ -112,8 +112,14 @@ export const FormContainer = styled.form `
     }
 `
 
+export const DateErrorMessage = styled.p `
+    margin: .5rem 3rem 0 3rem;
+    font-size: .9rem;
+    color: var(--red);
+`
+
 export const TransactionsContainer = styled.section `
-    margin: 5rem 2rem 0 2rem;
+    margin: 4rem 2rem 0 2rem;
 `
 
 export const Titles = styled.div `
